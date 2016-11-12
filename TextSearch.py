@@ -1,6 +1,3 @@
-search_text = ['M','i','s','s','i','s','s','i','p','p','i']
-search_word = ['p','p','i']
-
 def naive_text_search(pattern, search_text):
     for i in range(len(search_text) - len(pattern)):
         for j in range(len(pattern)):
@@ -35,16 +32,13 @@ def boyer_moore(pattern, search_text):
         if search_text[count+len(pattern)-1] not in pattern_indexes:
             count += len(pattern)
             continue
+
+        count += pattern_indexes.get(search_text[count+len(pattern)-1])
+        for i in range(len(pattern)):
+            if search_text[count+i] != pattern[i]:
+                count += 1
+                break
         else:
-            print(count)
-            count += pattern_indexes.get(search_text[count+len(pattern)-1])
-            print(pattern_indexes.get(search_text[count+len(pattern)-1]))
-            for i in range(len(pattern)):
-                print(search_text[count+i], pattern[i])
-                if search_text[count+i] != pattern[i]:
-                    count += 1
-                    break
-            else:
-                return count
+            return count
     return -1
 
